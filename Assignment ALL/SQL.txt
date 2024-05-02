@@ -1,0 +1,158 @@
+CREATE TABLE BOOKS (
+BOOK_ID VARCHAR(6) not null primary key,
+BOOK_IMAGE BLOB,
+BOOK_NAME VARCHAR(1000),
+AUTHOR VARCHAR(50),
+STOCKS INTEGER,
+PRICE DOUBLE,
+CATEGORY VARCHAR(50),
+LANGUAGES VARCHAR(50),
+DESCRIPTION VARCHAR(5000)
+);
+
+CREATE TABLE ROLES ( 
+ROLE_ID VARCHAR(6) not null primary key,
+ROLE_NAME VARCHAR(50),
+ROLE_DESCRIPTION VARCHAR(10000)
+);
+
+
+CREATE TABLE USERS (
+USER_ID VARCHAR(6) not null primary key,
+ROLE_ID VARCHAR(6),
+USER_NAME VARCHAR(50),
+USER_EMAIL VARCHAR(50),
+PHONE_NUM VARCHAR(12),
+PASSWORD VARCHAR(20),
+foreign key (ROLE_ID) references ROLES(ROLE_ID)
+);
+
+CREATE TABLE STAFFS (
+STAFF_ID VARCHAR(6) not null primary key,
+ROLE_ID VARCHAR(6),
+STAFF_NAME VARCHAR(50),
+COMPANY_EMAIL VARCHAR(50),
+PHONE_NUM VARCHAR(12),
+PASSWORD VARCHAR(20),
+foreign key (ROLE_ID) references ROLES(ROLE_ID)
+);
+
+CREATE TABLE CART (
+CART_ID VARCHAR(6) not null primary key,
+USER_ID VARCHAR(6),
+BOOK_ID VARCHAR(6),
+QUANTITY INTEGER,
+foreign key (USER_ID) references USERS(USER_ID),
+foreign key (BOOK_ID) references BOOKS(BOOK_ID)
+);
+
+CREATE TABLE ORDERS (
+ORDER_ID VARCHAR(6) not null primary key,
+USER_ID VARCHAR(6),
+ORDER_DATE DATE,
+foreign key (USER_ID) references USERS(USER_ID)
+);
+
+CREATE TABLE ORDER_HISTORY (
+"BOOK_ORDER_ID" VARCHAR(6) not null primary key,
+BOOK_ID VARCHAR(6),
+ORDER_ID VARCHAR(6),
+QUANTITY INTEGER,
+foreign key (ORDER_ID) references ORDERS(ORDER_ID),
+foreign key (BOOK_ID) references BOOKS(BOOK_ID)
+);
+
+
+CREATE TABLE PAYMENT (
+PAYMENT_ID VARCHAR(6) not null primary key,
+ORDER_ID VARCHAR(6),
+TOTAL DOUBLE,
+PAYMENT_METHOD VARCHAR(50),
+foreign key (ORDER_ID) references ORDERS(ORDER_ID)
+);
+
+CREATE TABLE TRANSACTIONS (
+TRANSACTION_ID VARCHAR(6) not null primary key,
+PAYMENT_ID VARCHAR(6),
+foreign key (PAYMENT_ID) references PAYMENT(PAYMENT_ID)
+);
+
+CREATE TABLE SHIPPING (
+SHIPPING_ID VARCHAR(6) not null primary key,
+ORDER_ID VARCHAR(6),
+ADDRESS VARCHAR(1000),
+STATUS VARCHAR(50),
+foreign key (ORDER_ID) references ORDERS(ORDER_ID)
+);
+
+INSERT INTO NBUSER.BOOKS (BOOK_ID, BOOK_NAME, AUTHOR, STOCKS, PRICE, CATEGORY, LANGUAGES, DESCRIPTION) 
+	VALUES ('B1001', 'HOW TO GROW A SMALL BUSINESS: A 6-STEP PLAN TO HELP YOUR BUSINESS TAKE OFF', 'Donald Miller', 15, 89.95, 'Business & Management', 'English', ' Donald Miller book provides a step-by-step approach to crafting messages that resonate with your target audience, allowing you to create a movement around your mission or campaign, develop and strengthen your brand, and cultivate long-lasting awareness that can lead to a socially relevant movement around your message.');
+INSERT INTO NBUSER.BOOKS (BOOK_ID, BOOK_NAME, AUTHOR, STOCKS, PRICE, CATEGORY, LANGUAGES, DESCRIPTION) 
+	VALUES ('B1002', 'SELF-MADE BOSS: ADVICE, HACKS, AND LESSONS FROM SMALL BUSINESS OWNERS1ST EDITION', 'Jackie Reses , Lauren Weinberg', 16, 121.5, 'Business & Management', 'English', 'Self-Made Boss by Jackie Reses and Lauren Weinberg is an essential survival guide for small business owners, offering practical advice from dozens of successful entrepreneurs who have built their companies step by step, sharing their experiences on how they got their start, managed growth, and overcame obstacles, providing valuable information that can be applied right away to any business.');
+INSERT INTO NBUSER.BOOKS (BOOK_ID, BOOK_NAME, AUTHOR, STOCKS, PRICE, CATEGORY, LANGUAGES, DESCRIPTION) 
+	VALUES ('B1003', 'THE MAN WHO SOLVED THE MARKET: HOW JIM SIMONS LAUNCHED THE QUANT REVOLUTION', 'Gregory Zuckerman', 9, 79.95, 'Business & Management', 'English', 'In "The Man Who Solved the Market," Gregory Zuckerman provides a look inside the secretive hedge fund, Renaissance Technologies, founded by mathematician Jim Simons, who with his team of physicists, mathematicians, and computer scientists, used mathematical models and data analysis to amass great wealth and exert influence in scientific research, education, and politics, despite failing to anticipate the impact of senior executive Robert Mercer political activities.');
+INSERT INTO NBUSER.BOOKS (BOOK_ID, BOOK_NAME, AUTHOR, STOCKS, PRICE, CATEGORY, LANGUAGES, DESCRIPTION) 
+	VALUES ('B1004', 'DECISION INTELLIGENCE FOR DUMMIES', 'Pamela Baker', 8, 125.78, 'Computer & Engineering', 'English', 'Decision Intelligence For Dummies helps you navigate the overwhelming availability of data and AI, empowering you to make data-informed but human-driven decisions by using all available resources to achieve maximum flexibility.');
+INSERT INTO NBUSER.BOOKS (BOOK_ID, BOOK_NAME, AUTHOR, STOCKS, PRICE, CATEGORY, LANGUAGES, DESCRIPTION) 
+	VALUES ('B1005', 'JAVA FOR DUMMIES, 8ED', 'Barry Burd', 7, 107.78, 'Computer & Engineering', 'English', 'This book, Java for Dummies, is a beginners guide to programming in Java. It covers the latest developments in Java, including the new switch statement syntax, and teaches how to program with classes, objects, and methods while using Javas functional programming features.');
+INSERT INTO NBUSER.BOOKS (BOOK_ID, BOOK_NAME, AUTHOR, STOCKS, PRICE, CATEGORY, LANGUAGES, DESCRIPTION) 
+	VALUES ('B1006', 'MICROSOFT 365 FOR DUMMIES', 'Jennifer Reed', 2, 107.78, 'Computer & Engineering', 'English', 'Microsoft 365 For Dummies is a guidebook that helps you unlock the potential of Microsoft 365 to collaborate effectively, work remotely, and stay connected with colleagues. Learn the latest meeting and collaboration practices, infuse AI into your tasks, and automate work with Power Platform apps.');
+INSERT INTO NBUSER.BOOKS (BOOK_ID, BOOK_NAME, AUTHOR, STOCKS, PRICE, CATEGORY, LANGUAGES, DESCRIPTION) 
+	VALUES ('B1007', 'BRAIN FOOD', 'Lisa Mosconi', 6, 63.95, 'Health & Fitness', 'English', 'Women, Food, and Hormones is a bestselling book by Dr. Sara Gottfried, which presents a science-based, female-friendly keto diet plan that works with womens unique hormonal needs to accelerate fat loss, improve detoxification and blood sugar levels, target belly fat, reduce inflammation, and increase anti-aging hormones. The book also includes essential troubleshooting tips and over 50 delicious recipes.');
+INSERT INTO NBUSER.BOOKS (BOOK_ID, BOOK_NAME, AUTHOR, STOCKS, PRICE, CATEGORY, LANGUAGES, DESCRIPTION) 
+	VALUES ('B1008', 'LIFE TIME : THE NEW SCIENCE OF THE BODY CLOCK, AND HOW IT CAN REVOLUTIONIZE YOUR SLEEP AND HEALTH', 'Russell Foster', 4, 69.95, 'Health & Fitness', 'English', 'Life Time by Professor Russell Foster is a comprehensive exploration of the science behind our body clocks, highlighting the crucial role of circadian rhythms in our health. Foster draws on his own research and that of an international community of sleep scientists to demonstrate how the timing of daily activities can impact everything from sleep quality to medication effectiveness.');
+INSERT INTO NBUSER.BOOKS (BOOK_ID, BOOK_NAME, AUTHOR, STOCKS, PRICE, CATEGORY, LANGUAGES, DESCRIPTION) 
+	VALUES ('B1009', 'HISTORY OF THE WORLD MAP BY MAP', 'Dk', 15, 174.0, 'Travel', 'English', '"History of the World Map by Map" is an informative and visually stunning atlas that covers the evolution of early humans to the modern era, with 130 detailed maps that illustrate pivotal episodes in world history. With the help of overviews, timelines, paintings, and photographs, this book showcases how global patterns of trade, exploration, conflict, and technological advances have shaped human civilization.');
+INSERT INTO NBUSER.BOOKS (BOOK_ID, BOOK_NAME, AUTHOR, STOCKS, PRICE, CATEGORY, LANGUAGES, DESCRIPTION) 
+	VALUES ('B1010', 'TOP 10 SEOUL', 'Dk', 16, 46.5, 'Travel', 'English', 'This pocket-sized guidebook is packed with insider tips and ideas, colour maps, and top 10 lists, designed to help you discover the best of Seoul. From historic landmarks to neighbourhood guides and essential travel tips, this book takes the work out of planning a short trip to the vibrant city.');
+
+
+
+
+INSERT INTO NBUSER.ROLES (ROLE_ID, ROLE_NAME, ROLE_DESCRIPTION) 
+	VALUES ('U', 'User', 'USER');
+INSERT INTO NBUSER.ROLES (ROLE_ID, ROLE_NAME, ROLE_DESCRIPTION)
+	VALUES ('S', 'Staff', 'STAFF');
+
+
+INSERT INTO NBUSER.USERS (USER_ID, ROLE_ID, USER_NAME, USER_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('U1001', 'U', 'Nikki', 'Nikki15@gmai.com', '012-6656236', 'Nikki11');
+INSERT INTO NBUSER.USERS (USER_ID, ROLE_ID, USER_NAME, USER_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('U1002', 'U', 'Miki', 'Miki99@gmai.com', '019-9965652', 'Miki10');
+INSERT INTO NBUSER.USERS (USER_ID, ROLE_ID, USER_NAME, USER_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('U1003', 'U', 'Kiki', 'Kiki99@gmai.com', '013-4484566', 'Kiki00');
+INSERT INTO NBUSER.USERS (USER_ID, ROLE_ID, USER_NAME, USER_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('U1004', 'U', 'Kenny', 'Kenny99@gmai.com', '012-4475856', 'Kenny17');
+INSERT INTO NBUSER.USERS (USER_ID, ROLE_ID, USER_NAME, USER_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('U1005', 'U', 'Geoch', 'Geoch91@gmai.com', '013-2256325', 'geoch172');
+INSERT INTO NBUSER.USERS (USER_ID, ROLE_ID, USER_NAME, USER_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('U1006', 'U', 'Kevin', 'Kevin12@gmai.com', '016-5542042', 'Kevin199');
+INSERT INTO NBUSER.USERS (USER_ID, ROLE_ID, USER_NAME, USER_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('U1007', 'U', 'Calvin', 'Calvin15@gmai.com', '012-2230123', 'Calvin182');
+INSERT INTO NBUSER.USERS (USER_ID, ROLE_ID, USER_NAME, USER_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('U1008', 'U', 'Kelvin', 'Kelvin19@gmai.com', '013-6652310', 'Kelvin1223');
+INSERT INTO NBUSER.USERS (USER_ID, ROLE_ID, USER_NAME, USER_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('U1009', 'U', 'James', 'James0623@gmai.com', '019-5584510', 'James1623');
+INSERT INTO NBUSER.USERS (USER_ID, ROLE_ID, USER_NAME, USER_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('U1010', 'U', 'Lebron', 'Lebron0623@gmai.com', '016-0002552', 'Lebron1232');
+
+INSERT INTO NBUSER.STAFFS (STAFF_ID, ROLE_ID, STAFF_NAME, COMPANY_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('S10001', 'S', 'Kobe', 'Kobe@gmail.com', '019-9966332', 'Kobe24');
+INSERT INTO NBUSER.STAFFS (STAFF_ID, ROLE_ID, STAFF_NAME, COMPANY_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('S1002', 'S', 'Curry', 'Curry@gmail.com', '013-5566223', 'Curry30');
+INSERT INTO NBUSER.STAFFS (STAFF_ID, ROLE_ID, STAFF_NAME, COMPANY_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('S1003', 'S', 'Seth', 'Seth@gmail.com', '012-3365326', 'Seth30');
+INSERT INTO NBUSER.STAFFS (STAFF_ID, ROLE_ID, STAFF_NAME, COMPANY_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('S1004', 'S', 'Giannis', 'Giannis@gmail.com', '015-4851236', 'Giannis01');
+INSERT INTO NBUSER.STAFFS (STAFF_ID, ROLE_ID, STAFF_NAME, COMPANY_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('S1005', 'S', 'Durant', 'Durant@gmail.com', '018-9956231', 'Durant35');
+INSERT INTO NBUSER.STAFFS (STAFF_ID, ROLE_ID, STAFF_NAME, COMPANY_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('S1006', 'S', 'Russel ', 'Russel@gmail.com', '015-7784512', 'Rullel00');
+INSERT INTO NBUSER.STAFFS (STAFF_ID, ROLE_ID, STAFF_NAME, COMPANY_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('S1007', 'S', 'Jay', 'Jay@gmail.com', '012-3365956', 'Jay001');
+INSERT INTO NBUSER.STAFFS (STAFF_ID, ROLE_ID, STAFF_NAME, COMPANY_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('S1008', 'S', 'Davis', 'Davis@gmail.com', '015-4485623', 'David03');
+INSERT INTO NBUSER.STAFFS (STAFF_ID, ROLE_ID, STAFF_NAME, COMPANY_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('S1009', 'S', 'Antony', 'Antony@gmail.com', '015-9966332', 'Antony03');
+INSERT INTO NBUSER.STAFFS (STAFF_ID, ROLE_ID, STAFF_NAME, COMPANY_EMAIL, PHONE_NUM, PASSWORD) 
+	VALUES ('S1010', 'S', 'Lamelo', 'Lamelo@gmail.com', '013-5562314', 'Lamelo01');
